@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+        
+    <wb-module deploy-name="yaong_resort">
+                
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+                
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+                
+        <property name="context-root" value="yaong_resort"/>
+                
+        <property name="java-output-path" value="/yaong_resort/build/classes"/>
+            
+    </wb-module>
+    
+</project-modules>

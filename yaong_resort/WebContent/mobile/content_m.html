@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>Insert title here</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script>
+	//메인부분
+	var slideIndex = 1;
+	showSlides(slideIndex);
+	
+	function plusSlides(n) {
+	  showSlides(slideIndex += n);
+	}
+	
+	function currentSlide(n) {
+	  showSlides(slideIndex = n);
+	}
+	
+	function showSlides(n) {
+	  var i;
+	  var slides = document.getElementsByClassName("mySlides");
+	  var dots = document.getElementsByClassName("dot");
+	  if (n > slides.length) {slideIndex = 1}    
+	  if (n < 1) {slideIndex = slides.length}
+	  for (i = 0; i < slides.length; i++) {
+	      slides[i].style.display = "none";  
+	  }
+	  for (i = 0; i < dots.length; i++) {
+	      dots[i].className = dots[i].className.replace(" active", "");
+	  }
+	  
+	  slides[slideIndex-1].style.display = "block";  
+	  dots[slideIndex-1].className += " active";
+	}
+	
+	
+	//방 둘러보기
+	filterSelection("all") // Execute the function and show all columns
+	function filterSelection(c) {
+	  var x, i;
+	  x = document.getElementsByClassName("column");
+	  if (c == "all") c = "";
+	  // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
+	  for (i = 0; i < x.length; i++) {
+	    w3RemoveClass(x[i], "show");
+	    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+	  }
+	}
+	
+	// Show filtered elements
+	function w3AddClass(element, name) {
+	  var i, arr1, arr2;
+	  arr1 = element.className.split(" ");
+	  arr2 = name.split(" ");
+	  for (i = 0; i < arr2.length; i++) {
+	    if (arr1.indexOf(arr2[i]) == -1) {
+	      element.className += " " + arr2[i];
+	    }
+	  }
+	}
+	
+	// Hide elements that are not selected
+	function w3RemoveClass(element, name) {
+	  var i, arr1, arr2;
+	  arr1 = element.className.split(" ");
+	  arr2 = name.split(" ");
+	  for (i = 0; i < arr2.length; i++) {
+	    while (arr1.indexOf(arr2[i]) > -1) {
+	      arr1.splice(arr1.indexOf(arr2[i]), 1); 
+	    }
+	  }
+	  element.className = arr1.join(" ");
+	}
+	
+	// Add active class to the current button (highlight it)
+	var btnContainer = document.getElementById("myBtnContainer");
+	var btns = btnContainer.getElementsByClassName("btn");
+	for (var i = 0; i < btns.length; i++) {
+	  btns[i].addEventListener("click", function(){
+	    var current = document.getElementsByClassName("active");
+	    current[0].className = current[0].className.replace(" active", "");
+	    this.className += " active";
+	  });
+	}
+	</script>
+	<style>
+	/*메인 부분*/
+		* {
+		  box-sizing: border-box;
+		}
+		
+		body {
+		  background-color: #f1f1f1;
+		  font-family: Arial;
+		  margin:2px;
+		}
+		.mySlides {display: none;}
+		img {vertical-align: middle;}
+
+		/* Slideshow container */
+		.slideshow-container {
+		  max-width: devive-width;
+		  position: relative;
+		  margin: auto;
+		  padding-top:25%;
+		  padding-bottom:25%; /*사진 크기조절  */
+		  overflow: hidden; /*사진 크기조절  */
+		}
+		/*슬라이드쇼 사진에 아이디 부여해서 크기 조절  */
+		#main1, #main2, #main3, #main4, #main5 { 
+	      position: absolute; 
+	      top: 0; 
+	      left: 0; 
+	      right: 0; 
+	      bottom: 0; 
+	      max-width: devive-width; 
+	      height: auto; 
+	   }
+		
+		/* Next & previous buttons */
+		.prev, .next {
+		  cursor: pointer;
+		  position: absolute;
+		  top: 50%;
+		  width: auto;
+		  padding: 16px;
+		  margin-top: -22px;
+		  color: white;
+		  font-weight: bold;
+		  font-size: 11px;
+		  transition: 0.6s ease;
+		  border-radius: 0 3px 3px 0;
+		  user-select: none;
+		}
+		
+		/* Position the "next button" to the right */
+		.next {
+		  right: 0;
+		  border-radius: 3px 0 0 3px;
+		}
+		
+		/* On hover, add a black background color with a little bit see-through */
+		.prev:hover, .next:hover {
+		  background-color: rgba(0,0,0,0.8);
+		}
+		
+		/* Caption text */
+		.text {
+		  font-size: 11px;
+		  padding: 8px 12px;
+		  position: absolute;
+		  bottom: 8px;
+		  width: 100%;
+		  text-align: center;
+		  background-color:#ffffff; 
+		  opacity: 0.6; /*투명도*/
+		  color:black;
+		}
+		
+		/* Number text (1/3 etc) */
+		.numbertext {
+		  color: #f2f2f2;
+		  font-size: 12px;
+		  padding: 8px 12px;
+		  position: absolute;
+		  top: 0;
+		}
+		
+		/* The dots/bullets/indicators */
+		.dot {
+		  cursor: pointer;
+		  height: 15px;
+		  width: 15px;
+		  margin: 0 2px;
+		  background-color: #bbb;
+		  border-radius: 50%;
+		  display: inline-block;
+		  transition: background-color 0.6s ease;
+		}
+		
+		.active, .dot:hover {
+		  background-color: #717171;
+		}
+		
+		/* Fading animation */
+		.fade {
+		  -webkit-animation-name: fade;
+		  -webkit-animation-duration: 1.5s;
+		  animation-name: fade;
+		  animation-duration: 1.5s;
+		}
+		
+		@-webkit-keyframes fade {
+		  from {opacity: .4} 
+		  to {opacity: 1}
+		}
+		
+		@keyframes fade {
+		  from {opacity: .4} 
+		  to {opacity: 1}
+		}
+		
+		/* On smaller screens, decrease text size */
+/* 		@media only screen and (max-width: 300px) { */
+/* 		  .prev, .next,.text {font-size: 11px} */
+/* 		} */
+	
+		/* 오늘의 추천 부분  */		
+		/* Center website */
+		.main {
+		  max-width: 100%;
+		  margin: auto;
+		}
+		
+		h1 {
+		  font-size: 50px;
+		  word-break: break-all;
+		}
+		
+/* 		.row { */
+/* 		  margin: 10px -18px; */
+/* 		} */
+		
+		/* Add padding BETWEEN each column (if you want) */
+		.row,
+		.row > .column {
+		  padding: 9px;
+		}
+		
+		/* Create three equal columns that floats next to each other */
+		.column {
+		  float: left;
+		  width: 33%; /* 총 1200px인 width에서 33% 차지하면 사진이 세개씩 나옴*/
+		  display: none; /* Hide columns by default */
+		}
+		
+		/* Clear floats after rows */ 
+		.row:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+		
+		/* Content */
+		.content {
+		  background-color: white;
+		  padding: 12px;
+		}
+		
+		/* The "show" class is added to the filtered elements */
+		.show {
+		  display: block;
+		}
+		
+		/* Style the buttons */
+		.btn {
+		  border: none;
+		  outline: none;
+		  padding: 12px 16px;
+		  background-color: white;
+		  cursor: pointer;
+		}
+		
+		/* Add a grey background color on mouse-over */
+		.btn:hover {
+		  background-color: #ddd;
+		}
+		
+		/* Add a dark background color to the active button */
+		.btn.active {
+		  background-color: #666;
+		   color: white;
+		}
+	</style>
+	</head>
+	<body>
+				<!-- 메인부분-->
+			<strong style="font-family: 나눔바른펜; color:#6f6f9e;"> 지금까지 우리 고양이 걱정때문에 마음대로 휴가를 못 보내셨나요? 고양이 동반이 가능한 저희 야옹리조트에서 우리 고양이와 함께 휴식을 즐겨보세요!</strong>
+			<br><br>
+			<div class="slideshow-container">
+				<div class="mySlides fade">
+				  <div class="numbertext">1 / 5</div>
+				  <img id="main1" src="/yaong_resort/image/resort1.jpg" style="width:100%">
+				  <div class="text">고양이도 좋아하는<br> 아름다운 석양을 즐겨보세요.</div>
+				</div>
+				
+				<div class="mySlides fade">
+				  <div class="numbertext">2 / 5</div>
+				  <img id="main2" src="/yaong_resort/image/cat1.jpg" style="width:100%">
+				  <div class="text">내 고양이가 안심하고 머무는 곳! <br> 
+				  야옹리조트는 모두에게 완벽한 휴식을 제공합니다 :)</div>
+				</div>
+				
+				<div class="mySlides fade">
+				  <div class="numbertext">3 / 5</div>
+				  <img id="main3" src="/yaong_resort/image/cat2.jpg" style="width:100%">
+				  <div class="text">우리 고양이에게 직접 밥을 만들어줄 수 있습니다.<br>
+				  최고급 생식을 제공하는 야옹리조트의 멋진 프라이빗 주방!</div>
+				</div>
+				
+				<div class="mySlides fade">
+				  <div class="numbertext">4 / 5</div>
+				  <img id="main4" src="/yaong_resort/image/cat3.jpg" style="width:100%">
+				  <div class="text">여기가 우리집인가?<br>
+				  낯선 곳도 금새 편안한 장소로!</div>
+				</div>
+				
+				<div class="mySlides fade">
+				  <div class="numbertext">5 / 5</div>
+				  <img id="main5" src="/yaong_resort/image/cat4.jpg" style="width:100%">
+				  <div class="text">고양이 맞춤 인테리어!<br>
+				  우리 고양이가 안전하고 즐겁게 거닐 수 있는 최고의 방!</div>
+				</div>
+				
+				
+				</div>
+				<br>
+				
+				<div style="text-align:center">
+				  <span class="dot" onclick="currentSlide(1)"></span> 
+				  <span class="dot" onclick="currentSlide(2)"></span> 
+				  <span class="dot" onclick="currentSlide(3)"></span> 
+				  <span class="dot" onclick="currentSlide(4)"></span> 
+				  <span class="dot" onclick="currentSlide(5)"></span> 
+				</div>
+				
+				
+			<div class="main">
+			
+			<!-- <h2>야옹리조트 방 둘러보기</h2> -->
+			<br>
+			<hr>
+			<h3>preview</h3>
+			<div id="myBtnContainer">
+			  <button class="btn active" onclick="filterSelection('all')">모두 보기</button>
+			  <button class="btn" onclick="filterSelection('nature')"> VIP 룸</button>
+			  <button class="btn" onclick="filterSelection('cars')"> 일반 룸</button>
+			  <button class="btn" onclick="filterSelection('people')"> 합리적인 룸</button>
+			</div>
+			
+			<!-- Portfolio Gallery Grid -->
+			<div class="row">
+			  <div class="column nature">
+			    <div class="content" OnClick="location.href ='a_01_vipRoom.html'" style="cursor:pointer;">
+			      <img src="/yaong_resort/image/cat1.jpg" alt="VIP 룸1" style="width:100%">
+			      <h4>VIP 룸1</h4>
+			      <p style="font-size:0.8em;">모던하고 세련된 인테리어로 편안한 휴식을 제공합니다.</p>
+			    </div>
+			  </div>
+			  <div class="column nature" OnClick="location.href ='a_01_vipRoom.html'" style="cursor:pointer;">
+			    <div class="content">
+			      <img src="/yaong_resort/image/cat2.jpg" alt="VIP 룸2" style="width:100%">
+			      <h4>VIP 룸2</h4>
+			      <p style="font-size:0.8em;">품격있는 고급스러운 분위기로 편안한 휴식을 제공합니다.</p>
+			    </div>
+			  </div>
+			  <div class="column nature" OnClick="location.href ='a_01_vipRoom.html'" style="cursor:pointer;">
+			    <div class="content">
+			      <img src="/yaong_resort/image/cat3.jpg" alt="VIP 룸3" style="width:100%">
+			      <h4>VIP 룸3</h4>
+			      <p style="font-size:0.8em;">품격이 느껴지는 VIP룸에서 편안한 휴식을 제공합니다.</p>
+			    </div>
+			  </div>
+			
+			  <div class="column cars">
+			    <div class="content" OnClick="location.href ='a_02_standardRoom.html'" style="cursor:pointer;">
+			      <img src="/yaong_resort/image/cat4.jpg" alt="일반 룸" style="width:100%">
+			      <h4>일반 룸1</h4>
+			      <p style="font-size:0.8em;">차별화된 일반룸의 편안하고 여유로운 휴식을 누리세요.</p>
+			    </div>
+			  </div>
+			  <div class="column cars">
+			    <div class="content" OnClick="location.href ='a_02_standardRoom.html'" style="cursor:pointer;">
+			      <img src="/yaong_resort/image/cat5.jpg" alt="일반 룸2" style="width:100%">
+			      <h4>일반 룸2</h4>
+			      <p style="font-size:0.8em;">휴게공간 및 비즈니스를 위한 PC가 준비 되어있습니다.</p>
+			    </div>
+			  </div>
+			  <div class="column cars">
+			    <div class="content" OnClick="location.href ='a_02_standardRoom.html'" style="cursor:pointer;">
+			      <img src="/yaong_resort/image/cat1.jpg" alt="일반 룸3" style="width:100%">
+			      <h4>일반 룸3</h4>
+			      <p style="font-size:0.8em;">리뉴얼된 객실로 한층 편안한 휴식을 제공합니다.</p>
+			    </div>
+			  </div>
+			
+			  <div class="column people">
+			    <div class="content" OnClick="location.href ='a_03_fairRoom.html'" style="cursor:pointer;">
+			      <img src="/yaong_resort/image/cat2.jpg" alt="합리적인 룸1" style="width:100%">
+			      <h4>합리적인 룸1</h4>
+			      <p style="font-size:0.8em;">안락하고 편안한 휴식을 제공합니다.</p>
+			    </div>
+			  </div>
+			  <div class="column people">
+			    <div class="content" OnClick="location.href ='a_03_fairRoom.html'" style="cursor:pointer;">
+			      <img src="/yaong_resort/image/resort1.jpg" alt="합리적인 룸2" style="width:100%">
+			      <h4>합리적인 룸2</h4>
+			      <p style="font-size:0.8em;">언제라도 즐거움과 감동이 있습니다.</p>
+			    </div>
+			  </div>
+			  <div class="column people">
+			    <div class="content" OnClick="location.href ='a_03_fairRoom.html'" style="cursor:pointer;">
+			      <img src="/yaong_resort/image/cat4.jpg" alt="합리적인 룸3" style="width:100%">
+			      <h4>합리적인 룸3</h4>
+			      <p style="font-size:0.8em;">창을 열면 아름다운 풍경!</p>
+			    </div>
+			  </div>
+			<!-- END GRID -->
+			</div>
+			</div>
+	</body>
+</html>
